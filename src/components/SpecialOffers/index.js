@@ -13,206 +13,173 @@ const Heading = () => {
   );
 }
 
+const ItemWidget = (props) => {
+  const {
+    title,
+    image,
+    mrp,
+    discountedPrice,
+    rating,
+    quantity,
+  } = props;
+  return (
+    <div class="col-md-3 pro-1">
+        <div class="col-m">
+          <a href="#" data-toggle="modal" data-target="#myModal18" class="offer-img">
+            <img src={image} class="img-responsive" alt="" />
+          </a>
+          <div class="mid-1">
+            <div class="women">
+              <h6><a href="single.html"> {title}</a></h6>
+            </div>
+            <div class="mid-2">
+              <p><label>{mrp}</label><em class="item_price">{discountedPrice}</em></p>
+              <div class="block">
+                <div class="starbox small ghosting"> </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="add">
+              <button class={`btn my-cart-btn my-cart-b ${quantity === 0 ? 'disabled': ''}`} data-id="1" data-name="product 1"
+                data-summary="summary 1" data-price="4.50" data-quantity="1"
+                data-image="images/of17.png">{quantity === 0 ? 'Out of stock' : 'Add to Cart'}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  )
+}
+
 const SpecialOffers = () => {
+  const [widgets, setWidget] = useState({
+    "results": [{
+        "title": "Moisturiser",
+        "mrp": "$7.00",
+        "discounted_price": "$6.00",
+        "image": "images/of16.png",
+        "quantity": 0,
+        "selectedQuantity": 0,
+    }, {
+        "title": "Lady Finger(250 g)",
+        "mrp": "$8.00",
+        "discounted_price": "$6.00",
+        "image": "images/of17.png",
+        "quantity": 2,
+    }, {
+        "title": "Ribbon(1 pc)",
+        "mrp": "$10.00",
+        "discounted_price": "$7.00",
+        "image": "images/of18.png",
+        "quantity": 2,
+    }, {
+        "title": "Grapes(500 g)",
+        "mrp": "$11.00",
+        "discounted_price": "$6.00",
+        "image": "images/of19.png",
+        "quantity": 2
+    }, {
+        "title": "Clips(1 pack)",
+        "mrp": "$12.00",
+        "discounted_price": "$6.00",
+        "image": "images/of20.png",
+        "quantity": 4
+    }, {
+        "title": "Conditioner(250 g)",
+        "mrp": "$18.00",
+        "discounted_price": "$16.00",
+        "image": "images/of21.png",
+        "quantity": 5
+    }, {
+        "title": "Cleaner(250 kg)",
+        "mrp": "$17.00",
+        "discounted_price": "$16.00",
+        "image": "images/of22.png",
+        "quantity": 6
+    }, {
+        "title": "Gel(150 g)",
+        "mrp": "$14.00",
+        "discounted_price": "$10.00",
+        "image": "images/of22.png",
+        "quantity": 0
+    }],
+    "moreAvailable": true,
+    "demand": "High Demand",
+});
+
+const loadMore = () => {
+  const newWidgets = {
+      results: [{
+        "title": "New Clips(1 pack)",
+        "mrp": "$12.00",
+        "discounted_price": "$6.00",
+        "image": "images/of20.png",
+        "quantity": 4
+    }, {
+        "title": "New Conditioner(250 g)",
+        "mrp": "$18.00",
+        "discounted_price": "$16.00",
+        "image": "images/of21.png",
+        "quantity": 5
+    }, {
+        "title": "New Cleaner(250 kg)",
+        "mrp": "$17.00",
+        "discounted_price": "$16.00",
+        "image": "images/of22.png",
+        "quantity": 6
+    }, {
+        "title": "New Gel(150 g)",
+        "mrp": "$14.00",
+        "discounted_price": "$10.00",
+        "image": "images/of22.png",
+        "quantity": 0
+    }],
+    "moreAvailable": false,
+  };
+  setWidget(oldState => {
+    return {
+      ...oldState,
+      results: [...oldState.results, ...newWidgets.results],
+      moreAvailable: newWidgets.moreAvailable,
+    }
+  });
+}
+
+  const renderItems = (items) => {
+    return (
+      <>
+        <div className='text-center row p-4'>Demand: {widgets.demand}</div>
+        {
+          items.map((item) => {
+            return (
+              <ItemWidget
+                image={item.image}
+                mrp={item.mrp}
+                discountedPrice={item.discounted_price}
+                title={item.title}
+                quantity={item.quantity}
+              />
+            )
+          })
+        }
+        <div className='text-center'>
+          {
+            widgets.moreAvailable ? (
+              <span onClick={loadMore}>Load more</span>
+            ) : null
+          }
+        </div>
+      </>
+    )
+  };
+
+
   return (
     <div>
       <div class="product">
         <div class="container">
           <Heading />
-          <div class=" con-w3l">
-            <div class="col-md-3 pro-1">
-              <div class="col-m">
-                <a href="#" data-toggle="modal" data-target="#myModal17" class="offer-img">
-                  <img src="images/of16.png" class="img-responsive" alt="" />
-                </a>
-                <div class="mid-1">
-                  <div class="women">
-                    <h6><a href="single.html">Moisturiser</a>(500 g)</h6>
-                  </div>
-                  <div class="mid-2">
-                    <p><label>$7.00</label><em class="item_price">$6.00</em></p>
-                    <div class="block">
-                      <div class="starbox small ghosting"> </div>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="add add-2">
-                    <button class="btn btn-danger my-cart-btn my-cart-b" data-id="1" data-name="product 1"
-                      data-summary="summary 1" data-price="6.00" data-quantity="1"
-                      data-image="images/of16.png">Add to Cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3 pro-1">
-              <div class="col-m">
-                <a href="#" data-toggle="modal" data-target="#myModal18" class="offer-img">
-                  <img src="images/of17.png" class="img-responsive" alt="" />
-                </a>
-                <div class="mid-1">
-                  <div class="women">
-                    <h6><a href="single.html"> Lady Finger</a>(250 g)</h6>
-                  </div>
-                  <div class="mid-2">
-                    <p><label>$5.00</label><em class="item_price">$4.50</em></p>
-                    <div class="block">
-                      <div class="starbox small ghosting"> </div>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="add">
-                    <button class="btn btn-danger my-cart-btn my-cart-b" data-id="1" data-name="product 1"
-                      data-summary="summary 1" data-price="4.50" data-quantity="1"
-                      data-image="images/of17.png">Add to Cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3 pro-1">
-              <div class="col-m">
-                <a href="#" data-toggle="modal" data-target="#myModal19" class="offer-img">
-                  <img src="images/of18.png" class="img-responsive" alt="" />
-                </a>
-                <div class="mid-1">
-                  <div class="women">
-                    <h6><a href="single.html"> Ribbon</a>(1 pc)</h6>
-                  </div>
-                  <div class="mid-2">
-                    <p><label>$4.00</label><em class="item_price">$3.50</em></p>
-                    <div class="block">
-                      <div class="starbox small ghosting"> </div>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="add">
-                    <button class="btn btn-danger my-cart-btn my-cart-b" data-id="1" data-name="product 1"
-                      data-summary="summary 1" data-price="3.50" data-quantity="1"
-                      data-image="images/of18.png">Add to Cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3 pro-1">
-              <div class="col-m">
-                <a href="#" data-toggle="modal" data-target="#myModal20" class="offer-img">
-                  <img src="images/of19.png" class="img-responsive" alt="" />
-                </a>
-                <div class="mid-1">
-                  <div class="women">
-                    <h6><a href="single.html">Grapes</a>(500 g)</h6>
-                  </div>
-                  <div class="mid-2">
-                    <p><label>$1.00</label><em class="item_price">$0.80</em></p>
-                    <div class="block">
-                      <div class="starbox small ghosting"> </div>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="add">
-                    <button class="btn btn-danger my-cart-btn my-cart-b" data-id="1" data-name="product 1"
-                      data-summary="summary 1" data-price="0.80" data-quantity="1"
-                      data-image="images/of19.png">Add to Cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-3 pro-1">
-              <div class="col-m">
-                <a href="#" data-toggle="modal" data-target="#myModal21" class="offer-img">
-                  <img src="images/of20.png" class="img-responsive" alt="" />
-                </a>
-                <div class="mid-1">
-                  <div class="women">
-                    <h6><a href="single.html">Clips</a>(1 pack)</h6>
-                  </div>
-                  <div class="mid-2">
-                    <p><label>$7.00</label><em class="item_price">$6.00</em></p>
-                    <div class="block">
-                      <div class="starbox small ghosting"> </div>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="add">
-                    <button class="btn btn-danger my-cart-btn my-cart-b" data-id="1" data-name="product 1"
-                      data-summary="summary 1" data-price="6.00" data-quantity="1"
-                      data-image="images/of20.png">Add to Cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3 pro-1">
-              <div class="col-m">
-                <a href="#" data-toggle="modal" data-target="#myModal22" class="offer-img">
-                  <img src="images/of21.png" class="img-responsive" alt="" />
-                </a>
-                <div class="mid-1">
-                  <div class="women">
-                    <h6><a href="single.html">Conditioner</a>(250 g)</h6>
-                  </div>
-                  <div class="mid-2">
-                    <p><label>$5.00</label><em class="item_price">$4.50</em></p>
-                    <div class="block">
-                      <div class="starbox small ghosting"> </div>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="add">
-                    <button class="btn btn-danger my-cart-btn my-cart-b" data-id="1" data-name="product 1"
-                      data-summary="summary 1" data-price="4.50" data-quantity="1"
-                      data-image="images/of21.png">Add to Cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3 pro-1">
-              <div class="col-m">
-                <a href="#" data-toggle="modal" data-target="#myModal23" class="offer-img">
-                  <img src="images/of22.png" class="img-responsive" alt="" />
-                </a>
-                <div class="mid-1">
-                  <div class="women">
-                    <h6><a href="single.html">Cleaner</a>(250 kg)</h6>
-                  </div>
-                  <div class="mid-2">
-                    <p><label>$4.00</label><em class="item_price">$3.50</em></p>
-                    <div class="block">
-                      <div class="starbox small ghosting"> </div>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="add">
-                    <button class="btn btn-danger my-cart-btn my-cart-b" data-id="1" data-name="product 1"
-                      data-summary="summary 1" data-price="3.50" data-quantity="1"
-                      data-image="images/of22.png">Add to Cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3 pro-1">
-              <div class="col-m">
-                <a href="#" data-toggle="modal" data-target="#myModal24" class="offer-img">
-                  <img src="images/of23.png" class="img-responsive" alt="" />
-                </a>
-                <div class="mid-1">
-                  <div class="women">
-                    <h6><a href="single.html">Gel</a>(150 g)</h6>
-                  </div>
-                  <div class="mid-2">
-                    <p><label>$1.00</label><em class="item_price">$0.80</em></p>
-                    <div class="block">
-                      <div class="starbox small ghosting"> </div>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="add">
-                    <button class="btn btn-danger my-cart-btn my-cart-b" data-id="1" data-name="product 1"
-                      data-summary="summary 1" data-price="0.80" data-quantity="1"
-                      data-image="images/of23.png">Add to Cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="con-w3l">
+            {renderItems(widgets.results)}
             <div class="clearfix"></div>
           </div>
         </div>
