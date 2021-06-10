@@ -3,12 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import SpecialOffers from './components/SpecialOffers';
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App /> */}
-    <SpecialOffers />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
