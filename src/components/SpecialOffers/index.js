@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-
+import { Link, useRouteMatch } from "react-router-dom";
 const Heading = () => {
   return (
     <div class="spec ">
@@ -24,6 +24,7 @@ const ItemWidget = (props) => {
     discountedPrice,
     rating,
     quantity,
+    id,
   } = props;
 
 
@@ -68,7 +69,7 @@ const ItemWidget = (props) => {
           </a>
           <div class="mid-1">
             <div class="women">
-              <h6><a href="single.html"> {title}</a></h6>
+              <h6><Link to={`/products/${id}`}> {title}</Link></h6>
             </div>
             <div class="mid-2">
               <p><label>{mrp}</label><em class="item_price">{discountedPrice}</em></p>
@@ -133,6 +134,7 @@ useEffect(() => {
                 discountedPrice={item.discounted_price}
                 title={item.title}
                 quantity={item.quantity}
+                id={item.id}
               />
             )
           })
