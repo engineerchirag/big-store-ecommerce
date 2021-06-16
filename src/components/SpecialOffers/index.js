@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState, useContext } from 'react';
 import { Link, useRouteMatch } from "react-router-dom";
+import CartContext from '../../context/Cart/CartContext';
 const Heading = () => {
   return (
     <div class="spec ">
@@ -16,6 +17,8 @@ const Heading = () => {
 const ItemWidget = (props) => {
   const [productCount, setState] = useState(0);
   const [ratingCount, setRating] = useState(2);
+  const cartDetail = useContext(CartContext);
+  console.log(cartDetail);
 
   const {
     title,
@@ -58,6 +61,12 @@ const ItemWidget = (props) => {
   const handleAddToCart = () => {
     if (quantity > productCount) {
       setState(s => s + 1);
+      cartDetail.addProduct(id, {
+        title,
+        image,
+        mrp,
+        discountedPrice,
+      });
     }
   }
 
@@ -94,31 +103,31 @@ const SpecialOffers = () => {
 
   const [widgets, setWidget] = useState({});
 
-const loadMore = () => {
-  const newWidgets = {
-      results: [{
-        "title": "New Clips(1 pack)",
-        "mrp": "$12.00",
-        "discounted_price": "$6.00",
-        "image": "images/of20.png",
-        "quantity": 4
-    }],
-    "moreAvailable": false,
-  };
-  setWidget(oldState => {
-    return {
-      ...oldState,
-      results: [...oldState.results, ...newWidgets.results],
-      moreAvailable: newWidgets.moreAvailable,
-    }
-  });
-}
+  const loadMore = () => {
+    const newWidgets = {
+        results: [{
+          "title": "New Clips(1 pack)",
+          "mrp": "$12.00",
+          "discounted_price": "$6.00",
+          "image": "images/of20.png",
+          "quantity": 4
+      }],
+      "moreAvailable": false,
+    };
+    setWidget(oldState => {
+      return {
+        ...oldState,
+        results: [...oldState.results, ...newWidgets.results],
+        moreAvailable: newWidgets.moreAvailable,
+      }
+    });
+  }
 
-useEffect(() => {
-  fetch('https://run.mocky.io/v3/0ec53a06-6ef3-41c9-80a4-418304521c17')
-    .then((res) => res.json())
-    .then(res => setWidget(res));
-}, []);
+  useEffect(() => {
+    fetch('https://run.mocky.io/v3/0ec53a06-6ef3-41c9-80a4-418304521c17')
+      .then((res) => res.json())
+      .then(res => setWidget(res));
+  }, []);
 
   const renderItems = (items) => {
     return (

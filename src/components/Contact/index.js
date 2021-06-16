@@ -1,16 +1,88 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import Header from '../Header';
+import { FormWrapper } from './styles'; 
 
 const Contact = () => {
+
+    // Controlled way
+    const [form, setForm] = useState({
+        name: '',
+        email: '',
+        message: '',
+    });
+
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleErrorMessage = (key, value) => {
+        switch(key) {
+            case 'name': {
+                if ((value || '').length < 10) {
+                    setErrorMessage(`Name can't be less than 10 characters`);
+                } else {
+                    setErrorMessage('');
+                }
+                return;
+            }
+            case 'email': {
+                if ((value || '').indexOf('@') === -1) {
+                    setErrorMessage(`Please enter valid email`);
+                } else {
+                    setErrorMessage('');
+                }
+                return;
+            }
+            case 'message': {
+                if ((value || '').length < 20) {
+                    setErrorMessage(`Message can't be less than 20 characters`);
+                } else {
+                    setErrorMessage('');
+                }
+                return;
+            }
+        }
+    }
+
+    const handleChange = (key) => (e) => {
+        setForm(s => ({
+            ...s,
+            [key]: e.target.value,
+        }));
+
+
+        handleErrorMessage(key, e.target.value);
+    };
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        console.log(form);
+    };
+
+    // Uncontrolled way
+
+    // const nameRef = useRef('');
+    // const emailRef = useRef('');
+    // const messageRef = useRef('');
+
+    // const handleFormSubmit = (e) => {
+    //     e.preventDefault();
+    //     const form = {
+    //         name: nameRef.current.value,
+    //         email: emailRef.current.value,
+    //         message: messageRef.current.value,
+    //     };
+    //     console.log(form);
+    //     // Make api call to submit it
+    // };
+
     return (
         <div className="contact">
             <div className="container">
                 <div className="spec ">
                     <h3>Contact</h3>
-                        <div className="ser-t">
-                            <span><i></i></span>
-                            <b className="line"></b>
-                        </div>
+                    <div className="ser-t">
+                        <span><i></i></span>
+                        <b className="line"></b>
+                    </div>
                 </div>
                 <div className=" contact-w3">	
                     <div className="col-md-5 contact-right">	
@@ -37,12 +109,13 @@ const Contact = () => {
                                 </ul>
                                 <div className="resp-tabs-container hor_1">
                                     <div>
-                                        <form action="#" method="post">
-                                            <input type="text" value="Name" name="Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}" required="" />
-                                            <input type="email" value="Email" name="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="" />
-                                            <textarea name="Message..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message...';}" required="">Message...</textarea>
-                                            <input type="submit" value="Submit" />
-                                        </form>
+                                        <FormWrapper action="#" method="post">
+                                            <input className={`${form.name ? 'valid' : 'invalid'}`} type="text" name="Name" placeholder="Enter Name" onChange={handleChange('name')}/>  { /* ref={nameRef} */}
+                                            <input className={`${form.email ? 'valid' : 'invalid'}`} type="email" name="Email"  placeholder="Enter Email" onChange={handleChange('email')}/> { /* ref={emailRef} */}
+                                            <textarea className={`${form.message ? 'valid' : 'invalid'}`} name="Message"  placeholder="Enter Message" onChange={handleChange('message')}></textarea> { /* ref={messageRef} */}
+                                            <input type="submit" value="Submit" onClick={handleFormSubmit} />
+                                            <div className='error'>{errorMessage}</div>
+                                        </FormWrapper>
                                     </div>
                                     <div>
                                         <div className="map-grid">

@@ -9,6 +9,7 @@ import {
 
 import Home from './pages/Home';
 import Admin from './pages/Admin';
+import CartProvider from './context/Cart/CartProvider';
 
 /**
  * / => Customer facing homepage with header
@@ -29,7 +30,9 @@ function App() {
                 <Admin />
               </Route>
               <Route path="/">
-                <Home />
+                <CartProvider>
+                  <Home />
+                </CartProvider>
               </Route>
 
             </Switch>
