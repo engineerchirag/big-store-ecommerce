@@ -1,9 +1,15 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import CartContext from "../../context/Cart/CartContext";
 
 const Header = () => {
     const cartContext = useContext(CartContext);
+    
+    const productCount = Object.values(cartContext.products).reduce((acc, item) => {
+        acc += item.count;
+        return acc;
+    }, 0);
+
     return (
         <div className="header">
             <div className="container">
@@ -187,8 +193,7 @@ const Header = () => {
                         </div>
                     </nav>
                     <div className="cart">
-                        {Object.values(cartContext.products || {}).length}
-                        <span className="fa fa-shopping-cart my-cart-icon"><span className="badge badge-notify my-cart-badge"></span></span>
+                        <span className="fa fa-shopping-cart my-cart-icon"><span className="badge badge-danger my-cart-badge">{productCount}</span></span>
                     </div>
                     <div className="clearfix"></div>
                 </div>

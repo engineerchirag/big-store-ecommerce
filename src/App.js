@@ -30,9 +30,9 @@ function App() {
                 <Admin />
               </Route>
               <Route path="/">
-                <CartProvider>
-                  <Home />
-                </CartProvider>
+                  <CartProvider>
+                    <Home />
+                  </CartProvider>
               </Route>
 
             </Switch>

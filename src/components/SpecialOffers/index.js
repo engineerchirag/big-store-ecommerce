@@ -15,11 +15,6 @@ const Heading = () => {
 }
 
 const ItemWidget = (props) => {
-  const [productCount, setState] = useState(0);
-  const [ratingCount, setRating] = useState(2);
-  const cartDetail = useContext(CartContext);
-  console.log(cartDetail);
-
   const {
     title,
     image,
@@ -29,7 +24,10 @@ const ItemWidget = (props) => {
     quantity,
     id,
   } = props;
-
+  const cartDetail = useContext(CartContext);
+  const initProductCount = cartDetail.products[id] ? cartDetail.products[id].count : 0;
+  const [productCount, setState] = useState(initProductCount);
+  const [ratingCount, setRating] = useState(2);
 
   useEffect(() => {
     console.log('Rendered');
