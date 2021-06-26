@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 import CartContext from "../../context/Cart/CartContext";
 
@@ -10,8 +10,44 @@ const Header = () => {
         return acc;
     }, 0);
 
+    const initialState = {count: 0};
+
+    function reducer(state, action) {
+        switch (action.type) {
+            case 'increment':
+                return {
+                    ...state,
+                    count: state.count + 1
+                };
+            case 'decrement':
+                return {
+                    ...state,
+                    count: state.count - 1
+                };
+            default:
+                throw new Error();
+        }
+    }
+
+    function Counter() {
+        const [state, dispatch] = useReducer(reducer, initialState);
+
+        const handleCounter = (type) => () => {
+            dispatch({ type })
+        };
+
+        return (
+            <>
+                <span>Count: {state.count}</span>
+                <button onClick={handleCounter('increment')}>+</button>
+                <button onClick={handleCounter('decrement')}>-</button>
+            </>
+        );
+    }
+
     return (
         <div className="header">
+            {Counter()}
             <div className="container">
                 <div className="logo">
                     <h1><a href="index.html"><b>T<div>H</div>E</b>Big Store<span>The Best Supermarket</span></a></h1>
