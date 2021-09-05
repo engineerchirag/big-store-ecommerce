@@ -101,7 +101,28 @@ const SpecialOffers = () => {
 
   const [widgets, setWidget] = useState({});
 
-  const loadMore = () => {
+//   const loadMore = () => {
+//     const newWidgets = {
+//         results: [{
+//           "title": "New Clips(1 pack)",
+//           "mrp": "$12.00",
+//           "discounted_price": "$6.00",
+//           "image": "images/of20.png",
+//           "quantity": 4
+//       }],
+//       "moreAvailable": false,
+//     };
+//     setWidget(oldState => {
+//       return {
+//         ...oldState,
+//         results: [...oldState.results, ...newWidgets.results],
+//         moreAvailable: newWidgets.moreAvailable,
+//       }
+//     });
+//   }
+  
+  
+  const load = () => {
     const newWidgets = {
         results: [{
           "title": "New Clips(1 pack)",
@@ -120,6 +141,7 @@ const SpecialOffers = () => {
       }
     });
   }
+
 
   useEffect(() => {
     fetch('https://run.mocky.io/v3/0ec53a06-6ef3-41c9-80a4-418304521c17')
